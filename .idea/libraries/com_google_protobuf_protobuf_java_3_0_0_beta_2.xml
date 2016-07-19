@@ -3,6 +3,7 @@
     <properties maven-id="com.google.protobuf:protobuf-java:3.0.0-beta-2" />
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.0.0-beta-2/protobuf-java-3.0.0-beta-2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.0.0-beta-2/protobuf-java-3.0.0-beta-2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -27,11 +27,11 @@ public class MboxIteratorExample {
 
     // simple example of how to split an mbox into individual files
     public static void main(String[] args) throws IOException, FileNotFoundException {
-        final File mbox = new File("/home/estan/gmail2.mbox");
+        final File mbox = new File("C:/Users/dottig2-adm/NLP_Engine/mail-part2.mbox");
         long start = System.currentTimeMillis();
         int count = 0;
         for (CharBuffer buf : MboxIterator.fromFile(mbox).charset(Charsets.UTF_8).build()) {
-            FileOutputStream fout = new FileOutputStream(new File("target/messages/msg-" + count));
+            FileOutputStream fout = new FileOutputStream(new File("C:/Users/dottig2-adm/NLP_Engine/msg-" + count));
             FileChannel fileChannel = fout.getChannel();
             ByteBuffer buf2 = ENCODER.encode(buf);
             fileChannel.write(buf2);
