@@ -19,8 +19,8 @@ public class DBInterface {
         return this.session;
     }
 
-    public void connect(String node) {
-        cluster = Cluster.builder()
+    public void connect(String node, int cassandraPort) {
+        cluster = Cluster.builder().withPort(cassandraPort)
                 .addContactPoint(node)
                 .build();
         Metadata metadata = cluster.getMetadata();
@@ -33,12 +33,20 @@ public class DBInterface {
         session = cluster.connect();
     }
 
-    public void saveToDB(HashMap obj) {
-        Object text = obj.get("text");
-        Object score = obj.get("score");
-        session.execute("INSERT INTO college.emails (email_text, sentiment_score)" +
+    public void saveToDB(Email obj) {
+        String text = obj.getText();
+        Double score = obj.getSentimentScore();
+        String from = obj.getFrom();
+        String to = obj.getTo();
+        String date = obj.getDate();
+        String uniqueId = obj.getMessageId();
+        String[] references  = obj.getReferences();
+        String email = obj.getInReplyTo()[0];
+
+        session.execute("INSERT INTO college.emails (email_text, email_header, sentiment_score)" +
                     "VALUES ('" +
                     text + "',"  +
+                    score + "'," +
                     score + ""   +
                 ");");
     }
@@ -54,8 +62,14 @@ public class DBInterface {
         session.execute(
                 "CREATE TABLE IF NOT EXISTS college.emails (" +
                         "id uuid PRIMARY KEY," +
-                        "email_text text," +
-                        "sentiment_score integer" +
+                        "text text," +
+                        "from text, " +
+                        "re string," +
+                        "to string," +
+                        "date string, " +
+                        "sentiment_score double," +
+                        "email string," +
+                        "references set" +
                         ");");
     }
 
@@ -66,7 +80,8 @@ public class DBInterface {
 
     public static void main(String[] args) {
         DBInterface client = new DBInterface();
-        client.connect("127.0.0.1");
+        client.connect("127.0.0.1", 9042);
         client.createSchema();
+        client.close();
     }
 }
