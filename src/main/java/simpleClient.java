@@ -58,7 +58,7 @@ public class simpleClient {
                 "= {'class':'SimpleStrategy', 'replication_factor':3};");
         session.execute(
                 "CREATE TABLE IF NOT EXISTS college.emails (" +
-                        "id uuid PRIMARY KEY," +
+                        "id text PRIMARY KEY," +
                         "text text," +
                         "from text, " +
                         "re string," +
