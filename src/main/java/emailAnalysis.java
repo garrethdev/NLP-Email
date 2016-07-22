@@ -55,6 +55,7 @@ public class emailAnalysis {
     public Double averageEmailChain(Email[] theEmailList) {
         Double averageEmailCount = 0.0;
         Double sum = 0.0;
+
         for (int i = 0; i <theEmailList.length; i++) {
             sum += theEmailList[i].getReferences().length;
         }
