@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.HasWord;
+import edu.stanford.nlp.process.CoreLabelTokenFactory;
+import edu.stanford.nlp.process.DocumentPreprocessor;
+import edu.stanford.nlp.process.PTBTokenizer;
 /**
  * Created by garrethdottin on 7/19/16.
  */
@@ -87,5 +91,14 @@ public class emailAnalysis {
 
         return wordFrequency;
     }
+
+    public HashMap tokenFrequency(Email[] emailList) {
+        HashMap<String,Integer> wordFrequency = new HashMap<>();
+        PTBTokenizer<CoreLabel> ptbt = new PTBTokenizer<>(,
+                new CoreLabelTokenFactory(), "");
+
+        return  wordFrequency;
+    }
+
 
 }
