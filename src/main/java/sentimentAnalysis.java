@@ -35,9 +35,10 @@ public class sentimentAnalysis {
     }
 
     public ArrayList<Email> stripInBoundEmails(ArrayList<Email> theEmailList, String input) {
-        theEmailList.stream().filter( p -> p.getFrom() == input);
+        ArrayList<Email> outBoundEmails = new ArrayList<>();
+        theEmailList.stream().filter( p -> p.getFrom() != input).forEach(outBoundEmails::add);
 
-        return theEmailList;
+        return outBoundEmails;
     }
     public static void main(String[] args) {
 
