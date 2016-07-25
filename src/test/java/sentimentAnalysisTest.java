@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 /**
@@ -15,8 +16,9 @@ public class sentimentAnalysisTest {
             Gson gson = new Gson();
             String jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
+            ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
             sentimentAnalysis analysis = new sentimentAnalysis();
-            analysis.setScore(jsonWrapper);
+            analysis.setScore(cleanedDataSet);
             Boolean scorePresent = true;
             for (int i = 0; i< jsonWrapper.getResults().length; i++) {
                 if (jsonWrapper.getResults()[i].getSentimentScore() == null) {

@@ -1,5 +1,8 @@
+import edu.stanford.nlp.util.ArrayUtils;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -21,5 +24,17 @@ public class Util {
         } finally {
             scanner.close();
         }
+    }
+
+    public  static ArrayList<Email> cleanInput(Email[] theEmailList) {
+        ArrayList<Email> cleanedDataSet = new ArrayList<Email>();
+
+        for (int i = 0; i < theEmailList.length; i++) {
+            if (theEmailList[i].getText() != null) {
+                cleanedDataSet.add(theEmailList[i]);
+            }
+        }
+
+        return cleanedDataSet;
     }
 }

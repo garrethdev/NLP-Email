@@ -70,19 +70,28 @@ public class emailAnalysis {
 
 
     public HashMap wordFrequency(Email[] theEmailList) {
-        HashMap<String,Integer> wordFrequency = new HashMap<>();
+        HashMap<String, ArrayList<String>> wordFrequency = new HashMap<>();
         ArrayList<String> wordsToCheck = new ArrayList<>();
+        ArrayList<String> firstFlaggedWord = new ArrayList<String>();
+        ArrayList<String> secondFlaggedWord = new ArrayList<String>();
+
+        wordFrequency.put("like",firstFlaggedWord);
+        wordFrequency.put("maybe", secondFlaggedWord);
         wordsToCheck.add("like");
         wordsToCheck.add("maybe");
         for (int i = 0; i <theEmailList.length; i++) {
             // one email
-            String[] text = theEmailList[i].getText().split(" ");
-            Integer emailLength = text.length;
-            for (int v = 0; v < emailLength; v++) {
-                for (int z = 0; z < emailLength; z++) {
-                    // text[v]
-                    // increment count
-                    //
+            String[] emailText = theEmailList[i].getText().split(" ");
+            Integer emailLength = emailText.length;
+            for (int v = 1; v < emailLength; v++) {
+                // one word
+                String currentWord = emailText[v];
+                for (int z = 0; z < wordsToCheck.size(); z++) {
+                    String flaggedWord = wordsToCheck.get(z);
+                    if (currentWord.equals(flaggedWord)) {
+                        String flaggedWordContext = emailText[v -1] + " " + emailText[v] + " " + emailText[v +1];
+                        wordFrequency.get(flaggedWord).add(flaggedWordContext);
+                    }
                 }
             }
             // Set Value on Email Object
@@ -94,8 +103,8 @@ public class emailAnalysis {
 
     public HashMap tokenFrequency(Email[] emailList) {
         HashMap<String,Integer> wordFrequency = new HashMap<>();
-        PTBTokenizer<CoreLabel> ptbt = new PTBTokenizer<>(,
-                new CoreLabelTokenFactory(), "");
+//        PTBTokenizer<CoreLabel> ptbt = new PTBTokenizer<>(,
+//                new CoreLabelTokenFactory(), "");
 
         return  wordFrequency;
     }
