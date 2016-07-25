@@ -18,8 +18,8 @@ public class Sentiment {
             sentimentAnalysis sentiment = new sentimentAnalysis();
             sentiment.setScore(cleanedDataSet);
             emailAnalysis emailChain = new emailAnalysis();
-            emailChain.wordFrequency(jsonWrapper.getResults());
-            Email[] sortedEmails = emailChain.sortEmails(jsonWrapper.getResults());
+            emailChain.wordFrequency(cleanedDataSet);
+            ArrayList<Email> sortedEmails = emailChain.sortEmails(cleanedDataSet);
             emailChain.emailswithReplies(sortedEmails);
             emailChain.wordFrequency(sortedEmails);
         }

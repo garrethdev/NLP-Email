@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,41 +16,59 @@ public class emailAnalysis {
 
     }
 
-    public Email[] sortEmails(Email[] theEmailList) {
-        for (int i = 1; i < theEmailList.length; i++) {
+    public ArrayList<Email> sortEmails(ArrayList<Email> theEmailList) {
+        for (int i = 1; i < theEmailList.size(); i++) {
             Email temp;
-            int currentItem = theEmailList[i].getReferences().length;
-            int previousItem = theEmailList[i - 1].getReferences().length;
-            if (currentItem > previousItem) {
-                temp = theEmailList[i - 1];
-                theEmailList[i -1] = theEmailList[i];
-                theEmailList[i] = temp;
+            int currentItemLength;
+            int previousItemLength;
+            String[] currentItem = theEmailList.get(i).getReferences();
+            String[] previousItem = theEmailList.get(i - 1).getReferences();
+            if (currentItem == null) {
+                currentItemLength = 0;
+            }else {
+                currentItemLength = theEmailList.get(i).getReferences().length;
+            }
+            if (previousItem == null) {
+                previousItemLength = 0;
+            }
+            else {
+                previousItemLength = theEmailList.get(i-1).getReferences().length;
+            }
+            if (currentItemLength > previousItemLength) {
+                temp = theEmailList.get(i -1);
+                theEmailList.set(i - 1,theEmailList.get(i));
+                theEmailList.set(i, temp);
             }
         }
         return theEmailList;
     }
 
-    public ArrayList<Email> emailswithReplies(Email[] theEmaiLList) {
+    public ArrayList<Email> emailswithReplies(ArrayList<Email> theEmaiLList) {
         List<String> uniqueObjList = new ArrayList<String>();
         ArrayList<Email> endOfChainEmails = new ArrayList<Email>();
 
-        for (int i= 0; i < theEmaiLList.length; i++) {
-            Email currentEmail = theEmaiLList[i];
-
-            for( int v = 0; v < theEmaiLList[i].getReferences().length; v++) {
-                String referenceCheck = theEmaiLList[i].getReferences()[v];
+        for (int i= 0; i < theEmaiLList.size(); i++) {
+            Email currentEmail = theEmaiLList.get(i);
+            int currentEmailLength;
+            if (currentEmail.getReferences() == null ) {
+                currentEmailLength = 0;
+            }
+            else {
+                currentEmailLength = theEmaiLList.get(i).getReferences().length;
+            }
+            for( int v = 0; v < currentEmailLength; v++) {
+                String referenceCheck = theEmaiLList.get(i).getReferences()[v];
                 for( int z = 0; z < uniqueObjList.size(); z++){
                     if (uniqueObjList.get(z) == referenceCheck) {
-                        theEmaiLList[i].setEndOfChain(false);
+                        theEmaiLList.get(i).setEndOfChain(false);
                     }
                 }
                 uniqueObjList.add(referenceCheck);
-
             }
         }
-        for (int i = 0; i < theEmaiLList.length; i++) {
-            if (theEmaiLList[i].isEndOfChain()) {
-                endOfChainEmails.add(theEmaiLList[i]);
+        for (int i = 0; i < theEmaiLList.size(); i++) {
+            if (theEmaiLList.get(i).isEndOfChain()) {
+                endOfChainEmails.add(theEmaiLList.get(i));
             }
         }
 
@@ -69,7 +88,7 @@ public class emailAnalysis {
     }
 
 
-    public HashMap wordFrequency(Email[] theEmailList) {
+    public HashMap wordFrequency(ArrayList<Email> theEmailList) {
         HashMap<String, ArrayList<String>> wordFrequency = new HashMap<>();
         ArrayList<String> wordsToCheck = new ArrayList<>();
         ArrayList<String> firstFlaggedWord = new ArrayList<String>();
@@ -79,9 +98,9 @@ public class emailAnalysis {
         wordFrequency.put("maybe", secondFlaggedWord);
         wordsToCheck.add("like");
         wordsToCheck.add("maybe");
-        for (int i = 0; i <theEmailList.length; i++) {
+        for (int i = 0; i <theEmailList.size(); i++) {
             // one email
-            String[] emailText = theEmailList[i].getText().split(" ");
+            String[] emailText = theEmailList.get(i).getText().split(" ");
             Integer emailLength = emailText.length;
             for (int v = 1; v < emailLength; v++) {
                 // one word
@@ -94,8 +113,6 @@ public class emailAnalysis {
                     }
                 }
             }
-            // Set Value on Email Object
-            System.out.print(theEmailList[i]);
         }
 
         return wordFrequency;

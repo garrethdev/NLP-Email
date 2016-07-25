@@ -33,6 +33,12 @@ public class sentimentAnalysis {
             theEmailList.get(i).setSentimentScore(averageSentimentScore);
         }
     }
+
+    public ArrayList<Email> stripInBoundEmails(ArrayList<Email> theEmailList, String input) {
+        theEmailList.stream().filter( p -> p.getFrom() == input);
+
+        return theEmailList;
+    }
     public static void main(String[] args) {
 
 
