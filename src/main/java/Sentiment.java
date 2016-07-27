@@ -15,8 +15,8 @@ public class Sentiment {
             String  jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
-            sentimentAnalysis sentiment = new sentimentAnalysis();
-            sentiment.setScore(cleanedDataSet);
+//            sentimentAnalysis sentiment = new sentimentAnalysis();
+//            sentiment.setScore(cleanedDataSet);
             emailAnalysis emailChain = new emailAnalysis();
             emailChain.wordFrequency(cleanedDataSet);
             ArrayList<Email> sortedEmails = emailChain.sortEmails(cleanedDataSet);
