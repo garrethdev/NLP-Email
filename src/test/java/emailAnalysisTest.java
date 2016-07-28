@@ -31,9 +31,10 @@ public class emailAnalysisTest {
             for (int i = 1; i < sortedEmails.size(); i++) {
                 Integer nextEmailLength = sortedEmails.get(i).getReferences().length;
                 Integer currentEmailLength = sortedEmails.get(i-1).getReferences().length;
-                if (currentEmailLength < nextEmailLength) {
-                    outOfOrder = true;
-                }
+
+                    if (currentEmailLength < nextEmailLength) {
+                        outOfOrder = true;
+                    }
             }
             assertEquals(outOfOrder, false);
         }
@@ -47,6 +48,7 @@ public class emailAnalysisTest {
 
     @Test
     public void averageEmailChain() {
+        // False Test
         try {
             Gson gson = new Gson();
             String jsonContents = Util.readFile("src/modResults.json");

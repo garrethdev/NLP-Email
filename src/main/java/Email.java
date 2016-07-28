@@ -5,7 +5,7 @@
 public class Email {
     private String text;
     private String date;
-    private String[] references;
+    private String[] references = new String[]{};
     private String referenceId;
     private String subject;
     private String[] inReplyTo;
