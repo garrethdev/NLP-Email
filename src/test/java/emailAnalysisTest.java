@@ -71,16 +71,17 @@ public class emailAnalysisTest {
             Gson gson = new Gson();
             String jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
-
             emailAnalysis emailChain = new emailAnalysis();
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
             HashMap<String, ArrayList<String>> wordFreq = emailChain.wordFrequency(cleanedDataSet);
             ArrayList<ArrayList> arrayOFFlaggedWords = new ArrayList();
             Integer flaggedWordCount = 0;
             Integer testFlaggedCount = 0;
+
             for (String word : wordFreq.keySet()) {
                 flaggedWordCount += wordFreq.get(word).size();
             }
+
             for (Email email : cleanedDataSet) {
                     String[] currentText = email.getText().split(" ");
                     for( String text : currentText) {
@@ -90,11 +91,8 @@ public class emailAnalysisTest {
             }
 
             // Should check each Key Value  not just hardcoded versions
-
             assertEquals(testFlaggedCount, flaggedWordCount);
 
-            // if the input text doesnt have any matches the return arrays should be empty
-            // if the sample text does have any matches the arrays count should match the expected
         }
         catch (IOException e) {
             e.printStackTrace();

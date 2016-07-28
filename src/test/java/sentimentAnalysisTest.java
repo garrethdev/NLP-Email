@@ -20,8 +20,8 @@ public class sentimentAnalysisTest {
             sentimentAnalysis analysis = new sentimentAnalysis();
             analysis.setScore(cleanedDataSet);
             Boolean scorePresent = true;
-            for (int i = 0; i< jsonWrapper.getResults().length; i++) {
-                if (jsonWrapper.getResults()[i].getSentimentScore() == null) {
+            for (int i = 0; i< cleanedDataSet.size(); i++) {
+                if (cleanedDataSet.get(i).getSentimentScore() == null) {
                     scorePresent = false;
                 }
             }
