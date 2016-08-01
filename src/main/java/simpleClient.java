@@ -7,6 +7,8 @@ import com.datastax.driver.core.Host;
 import com.datastax.driver.core.Metadata;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class simpleClient {
     private Cluster cluster;
@@ -23,7 +25,7 @@ public class simpleClient {
         Metadata metadata = cluster.getMetadata();
         System.out.printf("Connected to cluster: %s\n",
                 metadata.getClusterName());
-        for ( Host host : metadata.getAllHosts() ) {
+        for (Host host : metadata.getAllHosts()) {
             System.out.printf("Datatacenter: %s; Host: %s; Rack: %s\n",
                     host.getDatacenter(), host.getAddress(), host.getRack());
         }
@@ -32,25 +34,38 @@ public class simpleClient {
 
     public void saveToDB(Email obj) {
         String text = obj.getText();
-        Double score = obj.getSentimentScore();
-        String from = obj.getFrom();
-        String to = obj.getTo();
         String date = obj.getDate();
+        String FromEmail = obj.getFromEmail();
+        String subject = obj.getSubject();
+        String to = obj.getTo();
+        Double score = obj.getSentimentScore();
         String uniqueId = obj.getMessageId();
-        String[] references  = obj.getReferences();
-        String email = obj.getInReplyTo()[0];
+//        String[] references = obj.getReferences();
+        Set<String> reference = new TreeSet<String>();
+        // Change to references
+//        String email = obj.getReplyTo()[0];
 
-        session.execute("INSERT INTO college.emails (email_text, email_header, sentiment_score)" +
+        session.execute("INSERT INTO college.emails (email_text, email_date, email_from, email_subject, email_to, email_score, email_id)" +
                 "VALUES ('" +
-                text + "',"  +
-                score + "'," +
-                score + ""   +
+                text + "', '" +
+                date + "', '" +
+                FromEmail + "', '" +
+                subject + "', '" +
+                to + "', " +
+                score + ", '" +
+                uniqueId + "' " +
                 ");");
     }
 
-    public ResultSet getAllResults(String[] args) {
-        ResultSet result = session.execute("SELECT * FROM emails");
+    public ResultSet getAllResults() {
+        ResultSet result = session.execute("SELECT * FROM college.emails");
         return result;
+    }
+
+    public ResultSet getOneItem(String messageId) {
+        ResultSet result = session.execute("SELECT * FROM college.emails where email_id = '" + messageId +"'");
+        return result;
+
     }
 
     public void createSchema() {
@@ -58,15 +73,14 @@ public class simpleClient {
                 "= {'class':'SimpleStrategy', 'replication_factor':3};");
         session.execute(
                 "CREATE TABLE IF NOT EXISTS college.emails (" +
-                        "id text PRIMARY KEY," +
-                        "text text," +
-                        "from text, " +
-                        "re string," +
-                        "to string," +
-                        "date string, " +
-                        "sentiment_score double," +
-                        "email string," +
-                        "references set" +
+                        "email_id text PRIMARY KEY," +
+                        "email_text text," +
+                        "email_date text, " +
+                        "email_from text," +
+                        "email_subject text," +
+                        "email_to text, " +
+                        "email_score double," +
+                        "email_references set<text>" +
                         ");");
     }
 

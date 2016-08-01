@@ -1,18 +1,20 @@
 /**
  * Created by dottig2-adm on 7/18/2016.
  */
+import java.util.Date;
 
 public class Email {
     private String text;
     private String date;
     private String[] references = new String[]{};
     private String referenceId;
+    private String fromEmail;
     private String subject;
-    private String[] inReplyTo;
+    private String[] replyTo;
     private String messageId;
-    private String from;
     private String to;
     private String priority;
+    private Date timestamp;
     private Double sentimentScore;
     private boolean endOfChain = true;
 
@@ -56,12 +58,12 @@ public class Email {
         this.subject = subject;
     }
 
-    public String[] getInReplyTo() {
-        return inReplyTo;
+    public String[] getReplyTo() {
+        return replyTo;
     }
 
-    public void setInReplyTo(String[] inReplyTo) {
-        this.inReplyTo = inReplyTo;
+    public void setReplyTo(String[] replyTo) {
+        this.replyTo = replyTo;
     }
 
     public String getMessageId() {
@@ -72,12 +74,12 @@ public class Email {
         this.messageId = messageId;
     }
 
-    public String getFrom() {
-        return from;
+    public String getFromEmail() {
+        return fromEmail;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setFromEmail(String fromEmail) {
+        this.fromEmail = fromEmail;
     }
 
     public String getTo() {
@@ -109,5 +111,13 @@ public class Email {
 
     public void setSentimentScore(Double sentimentScore) {
         this.sentimentScore = sentimentScore;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }
