@@ -34,4 +34,19 @@ public class sentimentAnalysisTest {
             System.out.println(e);
         }
     }
+    @Test
+    // Check to make sure the to email is always the same
+    public void stripInBoundEmails() {
+        try {
+            // Get file
+            // Look for first input
+            // Make sure it matches everything else in the input
+            // AssertTrue
+
+        }
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -48,7 +48,6 @@ public class emailAnalysisTest {
 
     @Test
     public void averageEmailChain() {
-        // False Test
         try {
             Gson gson = new Gson();
             String jsonContents = Util.readFile("src/modResults.json");
