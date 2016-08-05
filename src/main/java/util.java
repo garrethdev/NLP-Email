@@ -44,7 +44,7 @@ public class Util {
         return cleanedDataSet;
     }
 
-    public static void outputToJSON(HashMap<String, ArrayList<Email>> wordFrequency) {
+    public static void outputToJSON(HashMap<String, ArrayList> wordFrequency) {
         Gson gson = new Gson();
         String json = gson.toJson(wordFrequency);
         try {
