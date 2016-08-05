@@ -88,44 +88,73 @@ public class emailAnalysis {
         return averageEmailCount;
     }
 
+    public Double averageEmailChainReferences(ArrayList<Email> theEmailList) {
+        Double averageEmailCount = 0.0;
+        Double sum = 0.0;
+        Double counter = 0.0;
+        for (int i = 0; i <theEmailList.size(); i++) {
+            if (theEmailList.get(i).getReferences().length > 0) {
+                counter++;
+                sum += theEmailList.get(i).getReferences().length;
+            }
+        }
+        // Pass to user object
+        averageEmailCount = sum / counter;
+        return averageEmailCount;
+    }
 
     public HashMap wordFrequency(ArrayList<Email> theEmailList) {
         HashMap<String, ArrayList> wordFrequency = new HashMap<>();
         ArrayList<String> wordsToCheck = new ArrayList<>();
         ArrayList<String> firstFlaggedWord = new ArrayList<String>();
         ArrayList<String> secondFlaggedWord = new ArrayList<String>();
-        ArrayList<Double> firstFlaggedWordFrequency = new ArrayList<Double>();
-        ArrayList<Double> secondFlaggedWordFrequency = new ArrayList<Double>();
+        ArrayList<String> thirdFlaggedWord = new ArrayList<String>();
+        ArrayList<String> fourthFlaggedWord = new ArrayList<String>();
+        ArrayList<String> fifthFlaggedWord = new ArrayList<String>();
+        ArrayList<String> sixthFlaggedWord = new ArrayList<String>();
 
         wordFrequency.put("like",firstFlaggedWord);
         wordFrequency.put("maybe", secondFlaggedWord);
+        wordFrequency.put("perhaps", thirdFlaggedWord);
+        wordFrequency.put("dont know", fourthFlaggedWord);
+        wordFrequency.put("unsure", fifthFlaggedWord);
+        wordFrequency.put("sorry", sixthFlaggedWord);
         wordsToCheck.add("like");
         wordsToCheck.add("maybe");
+        wordsToCheck.add("perhaps");
+        wordsToCheck.add("don't know");
+        wordsToCheck.add("unsure");
+        wordsToCheck.add("sorry");
         for (int i = 0; i <theEmailList.size(); i++) {
-            // one email
             String[] emailText = theEmailList.get(i).getText().split(" ");
             Integer emailLength = emailText.length;
             for (int v = 1; v < emailLength; v++) {
-                // one word
                 String currentWord = emailText[v];
                 for (int z = 0; z < wordsToCheck.size(); z++) {
                     String flaggedWord = wordsToCheck.get(z);
-                    if (currentWord.equals(flaggedWord)) {
+                    if (currentWord.toLowerCase().equals(flaggedWord)) {
                         String flaggedWordContext = emailText[v -1] + " " + emailText[v] + " " + emailText[v +1];
                         wordFrequency.get(flaggedWord).add(flaggedWordContext);
                     }
                 }
             }
         }
+        wordFrequencyPercentange(wordFrequency,theEmailList);
+        return wordFrequency;
+    }
 
-        // Put in new function
+    private HashMap wordFrequencyPercentange(HashMap<String, ArrayList>  wordFrequency, ArrayList<Email> emailList) {
+        ArrayList<Double> firstFlaggedWordFrequency = new ArrayList<Double>();
+        ArrayList<Double> secondFlaggedWordFrequency = new ArrayList<Double>();
+
+        Double perHundred = (double) 100 / emailList.size();
         int likeFrequency = wordFrequency.get("like").size();
         double d = (double) likeFrequency;
-        Double likeFrequencyVal = d /100;
+        Double likeFrequencyVal = d  * perHundred;
 
         int maybeFrequency = wordFrequency.get("maybe").size();
         double m = (double) maybeFrequency;
-        Double maybeFrequencyVal = m / 100;
+        Double maybeFrequencyVal = m  * perHundred;
 
         firstFlaggedWordFrequency.add(likeFrequencyVal);
         secondFlaggedWordFrequency.add(maybeFrequencyVal);

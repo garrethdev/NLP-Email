@@ -34,6 +34,7 @@ public class Sentiment {
 //            sentiment.sentimentScoreIntervals(cleanedDataSet);
 //            sentiment.setScore(cleanedDataSet);
             emailAnalysis emailChain = new emailAnalysis();
+            emailChain.averageEmailChainReferences(cleanedDataSet);
 //            emailChain.wordFrequency(cleanedDataSet);
 
             ArrayList<Email> sortedEmails = emailChain.sortEmailsByChainLength(cleanedDataSet);
