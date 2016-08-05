@@ -16,7 +16,8 @@ public class emailAnalysis {
 
     }
 
-    public ArrayList<Email> sortEmails(ArrayList<Email> theEmailList) {
+    public ArrayList<Email> sortEmailsByChainLength (ArrayList<Email> theEmailList) {
+        // Broken should be bubble sort
         for (int i = 1; i < theEmailList.size(); i++) {
             Email temp;
             int currentItemLength;
@@ -75,24 +76,26 @@ public class emailAnalysis {
         return endOfChainEmails;
     }
 
-    public Double averageEmailChain(Email[] theEmailList) {
+    public Double averageEmailChain(ArrayList<Email> theEmailList) {
         Double averageEmailCount = 0.0;
         Double sum = 0.0;
 
-        for (int i = 0; i <theEmailList.length; i++) {
-            sum += theEmailList[i].getReferences().length;
+        for (int i = 0; i <theEmailList.size(); i++) {
+            sum += theEmailList.get(i).getReferences().length;
         }
 
-        averageEmailCount = sum / theEmailList.length;
+        averageEmailCount = sum / theEmailList.size();
         return averageEmailCount;
     }
 
 
     public HashMap wordFrequency(ArrayList<Email> theEmailList) {
-        HashMap<String, ArrayList<String>> wordFrequency = new HashMap<>();
+        HashMap<String, ArrayList> wordFrequency = new HashMap<>();
         ArrayList<String> wordsToCheck = new ArrayList<>();
         ArrayList<String> firstFlaggedWord = new ArrayList<String>();
         ArrayList<String> secondFlaggedWord = new ArrayList<String>();
+        ArrayList<Double> firstFlaggedWordFrequency = new ArrayList<Double>();
+        ArrayList<Double> secondFlaggedWordFrequency = new ArrayList<Double>();
 
         wordFrequency.put("like",firstFlaggedWord);
         wordFrequency.put("maybe", secondFlaggedWord);
@@ -115,16 +118,20 @@ public class emailAnalysis {
             }
         }
 
+        // Put in new function
+        int likeFrequency = wordFrequency.get("like").size();
+        double d = (double) likeFrequency;
+        Double likeFrequencyVal = d /100;
+
+        int maybeFrequency = wordFrequency.get("maybe").size();
+        double m = (double) maybeFrequency;
+        Double maybeFrequencyVal = m / 100;
+
+        firstFlaggedWordFrequency.add(likeFrequencyVal);
+        secondFlaggedWordFrequency.add(maybeFrequencyVal);
+        wordFrequency.put("likeFrequency", firstFlaggedWordFrequency);
+        wordFrequency.put("maybeFrequency",secondFlaggedWordFrequency);
+
         return wordFrequency;
     }
-
-    public HashMap tokenFrequency(Email[] emailList) {
-        HashMap<String,Integer> wordFrequency = new HashMap<>();
-//        PTBTokenizer<CoreLabel> ptbt = new PTBTokenizer<>(,
-//                new CoreLabelTokenFactory(), "");
-
-        return  wordFrequency;
-    }
-
-
 }

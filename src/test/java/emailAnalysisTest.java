@@ -25,7 +25,7 @@ public class emailAnalysisTest {
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
             emailAnalysis emailChain = new emailAnalysis();
-            ArrayList<Email> sortedEmails = emailChain.sortEmails(cleanedDataSet);
+            ArrayList<Email> sortedEmails = emailChain.sortEmailsByChainLength(cleanedDataSet);
             Boolean outOfOrder = false;
 
             for (int i = 1; i < sortedEmails.size(); i++) {
@@ -53,7 +53,8 @@ public class emailAnalysisTest {
             String jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
             emailAnalysis emailChain = new emailAnalysis();
-            Double average =  emailChain.averageEmailChain(jsonWrapper.getResults());
+            ArrayList<Email> cleanedInput = Util.cleanInput(jsonWrapper.getResults());
+            Double average =  emailChain.averageEmailChain(cleanedInput);
             assertNotNull(average);
         }
         catch (FileNotFoundException e) {
@@ -99,8 +100,34 @@ public class emailAnalysisTest {
 
 
     }
-    //emailswithReplies check whether the references are unique across collection
 
-    // wordFrequency
+    @Test
+    public void sortEmailsByChainLength () {
+        try {
+            Gson gson = new Gson();
+            String jsonContents = Util.readFile("src/modResults.json");
+            Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
+            emailAnalysis emailChain = new emailAnalysis();
+            ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
+            ArrayList<Email> testedResults = emailChain.sortEmailsByChainLength(cleanedDataSet);
+
+            Integer currentItem = 0;
+            Integer previousItem = 0;
+            Boolean flagResults = false;
+            for (Email results : testedResults) {
+                if (previousItem >currentItem ) {
+                    flagResults = true;
+                }
+                previousItem = currentItem;
+                currentItem = results.getReferences().length;
+
+            }
+
+            assertEquals(flagResults, true);
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
