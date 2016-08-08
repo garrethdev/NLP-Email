@@ -15,6 +15,20 @@ public class emailAnalysis {
     public static void main(String[] args) {
 
     }
+    public  ArrayList<Email> returnOutgoingEmails(ArrayList<Email> emailList, ArrayList input) {
+        ArrayList<Email> outgoingEmails = new ArrayList<>();
+
+        for (int i = 0; i < emailList.size(); i++) {
+            Email currentEmail = emailList.get(i);
+            for (int v = 0; v < input.size(); v++) {
+                if (currentEmail.getFromEmail().equals(input.get(v))) {
+                    outgoingEmails.add(currentEmail);
+                }
+            }
+        }
+
+        return outgoingEmails;
+    }
 
     public ArrayList<Email> sortEmailsByChainLength (ArrayList<Email> theEmailList) {
         // Broken should be bubble sort

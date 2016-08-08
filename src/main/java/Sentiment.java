@@ -27,6 +27,7 @@ public class Sentiment {
             String  jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = mapper.readValue(new File("C:/Users/dottig2-adm/Desktop/NLP-Email/src/modResults.json"), Results.class);
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
+            ArrayList<String> testCases = new ArrayList(Arrays.asList("<ariellacentlivre@gmail.com>"));
 //            Util.sortByDate(cleanedDataSet);
 
 //            SentimentAnalysis sentiment = new SentimentAnalysis();
@@ -34,11 +35,12 @@ public class Sentiment {
 //            sentiment.sentimentScoreIntervals(cleanedDataSet);
 //            sentiment.setScore(cleanedDataSet);
             emailAnalysis emailChain = new emailAnalysis();
-            emailChain.averageEmailChainReferences(cleanedDataSet);
+            emailChain.returnOutgoingEmails(cleanedDataSet,testCases );
+//            emailChain.averageEmailChainReferences(cleanedDataSet);
 //            emailChain.wordFrequency(cleanedDataSet);
 
-            ArrayList<Email> sortedEmails = emailChain.sortEmailsByChainLength(cleanedDataSet);
-            emailChain.emailswithReplies(sortedEmails);
+//            ArrayList<Email> sortedEmails = emailChain.sortEmailsByChainLength(cleanedDataSet);
+//            emailChain.emailswithReplies(sortedEmails);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
