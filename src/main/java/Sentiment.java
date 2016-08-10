@@ -12,6 +12,8 @@ import com.fasterxml.jackson.core.json.*;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.sun.tools.internal.jxc.ap.Const;
+
 import java.util.List;
 import java.util.Arrays;
 
@@ -25,15 +27,16 @@ public class Sentiment {
 
         try {
             String  jsonContents = Util.readFile("src/modResults.json");
-            Results jsonWrapper = mapper.readValue(new File("/Users/garrethdottin/Desktop/NLP-Email/src/modResults.json"), Results.class);
+            Results jsonWrapper = mapper.readValue(new File(Constants.HOME_ROUTE), Results.class);
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
 //            Util.sortByDate(cleanedDataSet);
 
 //            SentimentAnalysis sentiment = new SentimentAnalysis();
+//            sentiment.stripInBoundEmails(cleanedDataSet, "<ariellacentlivre@gmail.com>");
 //            sentiment.sentimentScoreIntervals(cleanedDataSet);
 //            sentiment.setScore(cleanedDataSet);
-
             emailAnalysis emailChain = new emailAnalysis();
+//            emailChain.averageEmailChainReferences(cleanedDataSet);
             emailChain.wordFrequency(cleanedDataSet);
 
             ArrayList<Email> sortedEmails = emailChain.sortEmailsByChainLength(cleanedDataSet);

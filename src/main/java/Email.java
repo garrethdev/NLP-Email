@@ -8,7 +8,7 @@ public class Email {
     private String date;
     private String[] references = new String[]{};
     private String referenceId;
-    private String fromEmail;
+    private String fromEmail = new String();
     private String subject;
     private String[] replyTo;
     private String messageId;

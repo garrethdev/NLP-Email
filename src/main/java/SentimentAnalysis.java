@@ -63,11 +63,16 @@ public class SentimentAnalysis {
     }
 
     public ArrayList<Email> stripInBoundEmails(ArrayList<Email> theEmailList, String input) {
+        // Doesnt handle craigslist
         ArrayList<Email> outBoundEmails = new ArrayList<>();
-//        theEmailList.stream().filter( p -> p.getFrom() != input).forEach(outBoundEmails::add);
-
+        for (Email email : theEmailList) {
+            if (email.getFromEmail().equals(input)) {
+                outBoundEmails.add(email);
+            }
+        }
         return outBoundEmails;
     }
+
     public static void main(String[] args) {
 
 

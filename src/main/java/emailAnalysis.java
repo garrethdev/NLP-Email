@@ -1,5 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import edu.stanford.nlp.ling.CoreLabel;
@@ -7,6 +8,7 @@ import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.DocumentPreprocessor;
 import edu.stanford.nlp.process.PTBTokenizer;
+
 /**
  * Created by garrethdottin on 7/19/16.
  */
@@ -17,6 +19,7 @@ public class emailAnalysis {
     }
 
     public ArrayList<Email> sortEmailsByChainLength (ArrayList<Email> theEmailList) {
+        // Broken should be bubble sort
         for (int i = 1; i < theEmailList.size(); i++) {
             Email temp;
             int currentItemLength;
@@ -87,6 +90,20 @@ public class emailAnalysis {
         return averageEmailCount;
     }
 
+    public Double averageEmailChainReferences(ArrayList<Email> theEmailList) {
+        Double averageEmailCount = 0.0;
+        Double sum = 0.0;
+        Double counter = 0.0;
+        for (int i = 0; i <theEmailList.size(); i++) {
+            if (theEmailList.get(i).getReferences().length > 0) {
+                counter++;
+                sum += theEmailList.get(i).getReferences().length;
+            }
+        }
+        // Pass to user object
+        averageEmailCount = sum / counter;
+        return averageEmailCount;
+    }
 
     public HashMap wordFrequency(ArrayList<Email> theEmailList) {
         HashMap<String, ArrayList> wordFrequency = new HashMap<>();
@@ -129,26 +146,24 @@ public class emailAnalysis {
     }
 
     private HashMap wordFrequencyPercentange(HashMap<String, ArrayList>  wordFrequency, ArrayList<Email> emailList) {
-        ArrayList<Double> firstFlaggedWordFrequency = new ArrayList<Double>();
-        ArrayList<Double> secondFlaggedWordFrequency = new ArrayList<Double>();
+        ArrayList<String> wordsToCheck = new ArrayList(Arrays.asList("like", "maybe", "perhaps", "unsure", "sorry", "dont know"));
+        HashMap<String, Double> results = new HashMap<>();
 
         Double perHundred = (double) 100 / emailList.size();
-        int likeFrequency = wordFrequency.get("like").size();
-        double d = (double) likeFrequency;
-        Double likeFrequencyVal = d  * perHundred;
 
-        int maybeFrequency = wordFrequency.get("maybe").size();
-        double m = (double) maybeFrequency;
-        Double maybeFrequencyVal = m  * perHundred;
+        for (String word : wordsToCheck) {
+            double Frequency = wordFrequency.get(word).size();
+            Double FrequencyVal = Frequency  * perHundred;
+            String key = word + "Frequency";
+            results.put(key, FrequencyVal);
+        }
 
-        firstFlaggedWordFrequency.add(likeFrequencyVal);
-        secondFlaggedWordFrequency.add(maybeFrequencyVal);
-        wordFrequency.put("likeFrequency", firstFlaggedWordFrequency);
-        wordFrequency.put("maybeFrequency",secondFlaggedWordFrequency);
+        Double sum = 0.0;
+        for (String result : results.keySet()) {
+            sum += results.get(result);
+        }
 
-        return wordFrequency;
+        results.put("totalFrequency",sum);
+        return results;
     }
-
-
-
 }

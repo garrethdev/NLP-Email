@@ -48,7 +48,6 @@ public class emailAnalysisTest {
 
     @Test
     public void averageEmailChain() {
-        // False Test
         try {
             Gson gson = new Gson();
             String jsonContents = Util.readFile("src/modResults.json");
@@ -100,6 +99,35 @@ public class emailAnalysisTest {
         }
 
 
+    }
+
+    @Test
+    public void sortEmailsByChainLength () {
+        try {
+            Gson gson = new Gson();
+            String jsonContents = Util.readFile("src/modResults.json");
+            Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
+            emailAnalysis emailChain = new emailAnalysis();
+            ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
+            ArrayList<Email> testedResults = emailChain.sortEmailsByChainLength(cleanedDataSet);
+
+            Integer currentItem = 0;
+            Integer previousItem = 0;
+            Boolean flagResults = false;
+            for (Email results : testedResults) {
+                if (previousItem >currentItem ) {
+                    flagResults = true;
+                }
+                previousItem = currentItem;
+                currentItem = results.getReferences().length;
+
+            }
+
+            assertEquals(flagResults, true);
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
