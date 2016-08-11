@@ -62,16 +62,7 @@ public class SentimentAnalysis {
         return intervalSentimentScores;
     }
 
-    public ArrayList<Email> stripInBoundEmails(ArrayList<Email> theEmailList, String input) {
-        // Doesnt handle craigslist
-        ArrayList<Email> outBoundEmails = new ArrayList<>();
-        for (Email email : theEmailList) {
-            if (email.getFromEmail().equals(input)) {
-                outBoundEmails.add(email);
-            }
-        }
-        return outBoundEmails;
-    }
+
 
     public static void main(String[] args) {
 

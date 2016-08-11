@@ -17,6 +17,31 @@ public class emailAnalysis {
     public static void main(String[] args) {
 
     }
+    public  ArrayList<Email> returnOutgoingEmails(ArrayList<Email> emailList, ArrayList input) {
+        ArrayList<Email> outgoingEmails = new ArrayList<>();
+
+        for (int i = 0; i < emailList.size(); i++) {
+            Email currentEmail = emailList.get(i);
+            for (int v = 0; v < input.size(); v++) {
+                if (currentEmail.getFromEmail().equals(input.get(v))) {
+                    outgoingEmails.add(currentEmail);
+                }
+            }
+        }
+
+        return outgoingEmails;
+    }
+
+    public ArrayList<Email> firstEmailinChain (ArrayList<Email> emailList) {
+        ArrayList<Email> firstEmails = new ArrayList<Email>();
+        for (int i = 0; i < emailList.size(); i++) {
+            Email currentEmail = emailList.get(i);
+            if (currentEmail.getReferences().length == 0) {
+                firstEmails.add(currentEmail);
+            }
+        }
+        return firstEmails;
+    }
 
     public int firstInChain(ArrayList<Email> emailList) {
         ArrayList<Email> firstInChain  = new ArrayList();
@@ -30,6 +55,28 @@ public class emailAnalysis {
 
         return firstInChain.size();
     }
+
+    public int firstEmails (ArrayList<Email> emailList) {
+        int numberFirstEmails = 0;
+        ArrayList<Email> cleanedDataSet = new ArrayList();
+
+        for (int i = 0; i < emailList.size(); i++) {
+            Email currentEmail = emailList.get(i);
+            for (int v = 0; v < cleanedDataSet.size(); v++) {
+                Email currentCleanedEmail = cleanedDataSet.get(v);
+                if (!currentEmail.getReplyTo().equals(currentCleanedEmail.getReplyTo())) {
+                    cleanedDataSet.add(currentEmail);
+                }
+            }
+        }
+
+        numberFirstEmails = cleanedDataSet.size();
+
+        return numberFirstEmails;
+    }
+
+
+
 
     public ArrayList<Email> sortEmailsByChainLength (ArrayList<Email> theEmailList) {
         // Broken should be bubble sort
