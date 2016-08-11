@@ -30,6 +30,17 @@ public class emailAnalysis {
         return outgoingEmails;
     }
 
+    public ArrayList<Email> firstEmailinChain (ArrayList<Email> emailList) {
+        ArrayList<Email> firstEmails = new ArrayList<Email>();
+        for (int i = 0; i < emailList.size(); i++) {
+            Email currentEmail = emailList.get(i);
+            if (currentEmail.getReferences().length == 0) {
+                firstEmails.add(currentEmail);
+            }
+        }
+        return firstEmails;
+    }
+
     public ArrayList<Email> sortEmailsByChainLength (ArrayList<Email> theEmailList) {
         // Broken should be bubble sort
         for (int i = 1; i < theEmailList.size(); i++) {
