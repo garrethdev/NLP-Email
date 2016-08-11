@@ -18,6 +18,19 @@ public class emailAnalysis {
 
     }
 
+    public int firstInChain(ArrayList<Email> emailList) {
+        ArrayList<Email> firstInChain  = new ArrayList();
+
+        for (int i = 0; i < emailList.size(); i++) {
+            Email currentEmail = emailList.get(i);
+            if (currentEmail.getReferences().length == 0) {
+                firstInChain.add(currentEmail);
+            }
+        }
+
+        return firstInChain.size();
+    }
+
     public ArrayList<Email> sortEmailsByChainLength (ArrayList<Email> theEmailList) {
         // Broken should be bubble sort
         for (int i = 1; i < theEmailList.size(); i++) {
