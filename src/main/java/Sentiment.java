@@ -12,6 +12,8 @@ import com.fasterxml.jackson.core.json.*;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.sun.tools.internal.jxc.ap.Const;
+
 import java.util.List;
 import java.util.Arrays;
 
@@ -25,7 +27,7 @@ public class Sentiment {
 
         try {
             String  jsonContents = Util.readFile("src/modResults.json");
-            Results jsonWrapper = mapper.readValue(new File("C:/Users/dottig2-adm/Desktop/NLP-Email/src/modResults.json"), Results.class);
+            Results jsonWrapper = mapper.readValue(new File(Constants.HOME_ROUTE), Results.class);
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
             ArrayList<String> testCases = new ArrayList(Arrays.asList("<ariellacentlivre@gmail.com>"));
 //            Util.sortByDate(cleanedDataSet);
@@ -35,9 +37,14 @@ public class Sentiment {
 //            sentiment.sentimentScoreIntervals(cleanedDataSet);
 //            sentiment.setScore(cleanedDataSet);
             emailAnalysis emailChain = new emailAnalysis();
+<<<<<<< HEAD
             emailChain.returnOutgoingEmails(cleanedDataSet,testCases );
 //            emailChain.averageEmailChainReferences(cleanedDataSet);
 //            emailChain.wordFrequency(cleanedDataSet);
+=======
+//            emailChain.averageEmailChainReferences(cleanedDataSet);
+            emailChain.wordFrequency(cleanedDataSet);
+>>>>>>> f1a624bb3fd86b1839798c7acfa295145c356677
 
 //            ArrayList<Email> sortedEmails = emailChain.sortEmailsByChainLength(cleanedDataSet);
 //            emailChain.emailswithReplies(sortedEmails);
