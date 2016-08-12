@@ -35,7 +35,7 @@ public class simpleClient {
     public void saveToDB(Email obj) {
         String text = obj.getText();
         String date = obj.getDate();
-        String FromEmail = obj.getFromEmail();
+        String FromEmail = obj.getFromName();
         String subject = obj.getSubject();
         String to = obj.getTo();
         Double score = obj.getSentimentScore();

@@ -8,7 +8,7 @@ public class Email {
     private String date;
     private String[] references = new String[]{};
     private String referenceId;
-    private String fromEmail = new String();
+    private String fromName = "";
     private String subject;
     private String[] replyTo;
     private String messageId;
@@ -74,12 +74,12 @@ public class Email {
         this.messageId = messageId;
     }
 
-    public String getFromEmail() {
-        return fromEmail;
+    public String getFromName() {
+        return fromName;
     }
 
-    public void setFromEmail(String fromEmail) {
-        this.fromEmail = fromEmail;
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
     }
 
     public String getTo() {

@@ -66,7 +66,7 @@ public class SentimentAnalysis {
         // Doesnt handle craigslist
         ArrayList<Email> outBoundEmails = new ArrayList<>();
         for (Email email : theEmailList) {
-            if (email.getFromEmail().equals(input)) {
+            if (email.getFromName().equals(input)) {
                 outBoundEmails.add(email);
             }
         }
