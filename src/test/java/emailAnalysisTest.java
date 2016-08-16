@@ -8,9 +8,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 /**
  * Created by dottig2-adm on 7/21/2016.
@@ -24,7 +21,7 @@ public class emailAnalysisTest {
             String jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
-            emailAnalysis emailChain = new emailAnalysis();
+            EmailAnalysis emailChain = new EmailAnalysis();
             ArrayList<Email> sortedEmails = emailChain.sortEmailsByChainLength(cleanedDataSet);
             Boolean outOfOrder = false;
 
@@ -52,7 +49,7 @@ public class emailAnalysisTest {
             Gson gson = new Gson();
             String jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
-            emailAnalysis emailChain = new emailAnalysis();
+            EmailAnalysis emailChain = new EmailAnalysis();
             ArrayList<Email> cleanedInput = Util.cleanInput(jsonWrapper.getResults());
             Double average =  emailChain.averageEmailChain(cleanedInput);
             assertNotNull(average);
@@ -71,7 +68,7 @@ public class emailAnalysisTest {
             Gson gson = new Gson();
             String jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
-            emailAnalysis emailChain = new emailAnalysis();
+            EmailAnalysis emailChain = new EmailAnalysis();
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
             HashMap<String, ArrayList<String>> wordFreq = emailChain.wordFrequency(cleanedDataSet);
             ArrayList<ArrayList> arrayOFFlaggedWords = new ArrayList();
@@ -107,7 +104,7 @@ public class emailAnalysisTest {
             Gson gson = new Gson();
             String jsonContents = Util.readFile("src/modResults.json");
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
-            emailAnalysis emailChain = new emailAnalysis();
+            EmailAnalysis emailChain = new EmailAnalysis();
 //            ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
 //            ArrayList<Email> testedResults = emailChain.sortEmailsByChainLength(cleanedDataSet);
 //

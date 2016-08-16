@@ -36,9 +36,10 @@ public class Util {
         ArrayList<Email> cleanedDataSet = new ArrayList<Email>();
 
         for (int i = 0; i < theEmailList.size(); i++) {
-            if (theEmailList.get(i).getText() != null ) {
-                cleanedDataSet.add(theEmailList.get(i));
-            }
+            Email currentEmail = theEmailList.get(i);
+                if (!currentEmail.getText().equals("")) {
+                    cleanedDataSet.add(currentEmail);
+                }
         }
 
         return cleanedDataSet;
@@ -58,6 +59,13 @@ public class Util {
 
         return outgoingEmails;
     }
+
+    public static ArrayList<Integer> sortByInteger(ArrayList<Integer> unsortedArr) {
+
+     return unsortedArr;
+    }
+
+
 
     public static void outputToJSON(HashMap<String, ArrayList> wordFrequency) {
         Gson gson = new Gson();

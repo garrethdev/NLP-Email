@@ -4,7 +4,7 @@
 import java.util.Date;
 
 public class Email {
-    private String text;
+    private String text = "";
     private String date;
     private String[] references = new String[]{};
     private String referenceId;

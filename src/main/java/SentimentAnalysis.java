@@ -41,7 +41,8 @@ public class SentimentAnalysis {
         ArrayList<Double> intervalSentimentScores = new ArrayList<Double>();
         Double numberOfSentences = 0.0;
         Double sum = 0.0;
-        Double interval = Math.floor(emailList.size() * .20);
+        Double intervalPercent = .20;
+        Double interval = Math.floor(emailList.size() * intervalPercent);
         for (Integer i = 0; i < emailList.size(); i++) {
             String processResult = emailList.get(i).getText();
             Annotation annotation = pipeline.process(processResult);

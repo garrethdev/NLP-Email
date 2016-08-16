@@ -4,16 +4,25 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.*;
+
+import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.HasWord;
+import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.DocumentPreprocessor;
 import edu.stanford.nlp.process.PTBTokenizer;
+import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
+import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.util.CoreMap;
 
 /**
  * Created by garrethdottin on 7/19/16.
  */
-public class emailAnalysis {
+public class EmailAnalysis {
 
     public static void main(String[] args) {
 
@@ -37,6 +46,52 @@ public class emailAnalysis {
         return numberFirstEmails;
     }
 
+    public ArrayList<Integer> emailLength(ArrayList<Email> emailList) {
+        ArrayList<Integer> emailLengths = new ArrayList<>();
+        for (int i = 0; i < emailList.size(); i++) {
+            Email currentEmail = emailList.get(i);
+            Integer emailLength = currentEmail.getText().length();
+            emailLengths.add(emailLength);
+        }
+        Collections.sort(emailLengths);
+        return emailLengths;
+    }
+
+    // Enhancement figure out how many sentences they have in each email
+    //
+    public HashMap<Double, Integer> percentageBreakdownEmailLength(ArrayList<Integer> emailList) {
+        Integer sizeofArr = emailList.size();
+        HashMap<Double,Integer> percentileResults = new HashMap<Double, Integer>();
+        ArrayList<Double> percentiles = new ArrayList<Double>();
+        percentiles.addAll(Arrays.asList(.25, .5, .75, .9));
+
+        for (int i = 0; i < percentiles.size(); i++) {
+            Integer percentVal = emailList.get((int) Math.floor(sizeofArr * percentiles.get(i)));
+            Double percentKey = percentiles.get(i);
+            percentileResults.put(percentKey, percentVal);
+        }
+
+        return percentileResults;
+    }
+
+    public ArrayList<Integer> emailLengthBySentence(ArrayList<Email> emailList) {
+        // go over each and grab the sentences
+        Properties props = new Properties();
+        props.setProperty("annotators", "tokenize,ssplit, pos, parse sentiment");
+        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+        Integer numberOfSentences = 0;
+        ArrayList<Integer> sentenceLength = new ArrayList<Integer>();
+        for (Integer i = 0; i < emailList.size(); i++) {
+            String processText = emailList.get(i).getText();
+            Annotation annotation = pipeline.process(processText);
+            Integer Counter = 0;
+            for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
+                Counter++;
+            }
+            sentenceLength.add(Counter);
+        }
+        return sentenceLength;
+    }
 
 
 
