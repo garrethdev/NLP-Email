@@ -19,18 +19,15 @@ public class Sentiment {
         mapper.configure(
                 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-
+        //TODO Create Methods for Each State you want
+        // TODO Get tests working
         try {
+            // Testing comments
             Results jsonWrapper = mapper.readValue(new File(Constants.HOME_ROUTE), Results.class);
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
             EmailAnalysis emailChain = new EmailAnalysis();
-            ArrayList<String> testSubjects = new ArrayList(Arrays.asList("harukahaoki@gmail.com", "<harukahaoki@gmail.com>","philipcr@miamioh.edu", "<philipcr@miamioh.edu>","ariellacentlivre@gmail.com", "<ariellacentlivre@gmail.com>"  ));
-            ArrayList<Email> senders = emailChain.returnOutgoingEmails(cleanedDataSet, testSubjects);
-            HashMap<String,ArrayList> result = emailChain.wordFrequency(cleanedDataSet);
-            ArrayList<Integer> emailLength = emailChain.emailLengthBySentence(senders);
-            HashMap<Double, Integer> percentiles = emailChain.percentageBreakdownEmailLength(emailLength);
-            //
-            //
+            emailChain.sortEmailsByChainLength(cleanedDataSet);
+
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();

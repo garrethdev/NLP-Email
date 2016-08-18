@@ -2,7 +2,6 @@ import java.io.IOException;
 import com.google.gson.Gson;
 import org.junit.Test;
 import java.io.FileNotFoundException;
-
 import static java.util.stream.Collectors.toMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 /**
  * Created by dottig2-adm on 7/21/2016.
  */
-public class emailAnalysisTest {
+public class EmailAnalysisTest {
     @Test
     // Checks to see if emails are sorted by the length of their email replies
     public void sortEmails () {
@@ -22,6 +21,7 @@ public class emailAnalysisTest {
             Results jsonWrapper = gson.fromJson(jsonContents, Results.class);
             ArrayList<Email> cleanedDataSet = Util.cleanInput(jsonWrapper.getResults());
             EmailAnalysis emailChain = new EmailAnalysis();
+
             ArrayList<Email> sortedEmails = emailChain.sortEmailsByChainLength(cleanedDataSet);
             Boolean outOfOrder = false;
 

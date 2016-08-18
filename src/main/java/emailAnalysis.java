@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.*;
-
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.HasWord;
@@ -28,7 +27,7 @@ public class EmailAnalysis {
 
     }
 
-    public int firstEmails (ArrayList<Email> emailList) {
+    public int firstEmailSize (ArrayList<Email> emailList) {
         int numberFirstEmails = 0;
         ArrayList<Email> cleanedDataSet = new ArrayList();
             for (int i = 0; i < emailList.size(); i++) {
@@ -46,7 +45,7 @@ public class EmailAnalysis {
         return numberFirstEmails;
     }
 
-    public ArrayList<Integer> emailLength(ArrayList<Email> emailList) {
+    public ArrayList<Integer> emailLengthArr(ArrayList<Email> emailList) {
         ArrayList<Integer> emailLengths = new ArrayList<>();
         for (int i = 0; i < emailList.size(); i++) {
             Email currentEmail = emailList.get(i);
@@ -138,21 +137,11 @@ public class EmailAnalysis {
         // Broken should be bubble sort
         for (int i = 1; i < theEmailList.size(); i++) {
             Email temp;
-            int currentItemLength;
-            int previousItemLength;
+            int currentItemLength = theEmailList.get(i).getReferences().length;
+            int previousItemLength = theEmailList.get(i-1).getReferences().length;
             String[] currentItem = theEmailList.get(i).getReferences();
             String[] previousItem = theEmailList.get(i - 1).getReferences();
-            if (currentItem == null) {
-                currentItemLength = 0;
-            }else {
-                currentItemLength = theEmailList.get(i).getReferences().length;
-            }
-            if (previousItem == null) {
-                previousItemLength = 0;
-            }
-            else {
-                previousItemLength = theEmailList.get(i-1).getReferences().length;
-            }
+
             if (currentItemLength > previousItemLength) {
                 temp = theEmailList.get(i -1);
                 theEmailList.set(i - 1,theEmailList.get(i));
@@ -168,13 +157,7 @@ public class EmailAnalysis {
 
         for (int i= 0; i < theEmaiLList.size(); i++) {
             Email currentEmail = theEmaiLList.get(i);
-            int currentEmailLength;
-            if (currentEmail.getReferences() == null ) {
-                currentEmailLength = 0;
-            }
-            else {
-                currentEmailLength = theEmaiLList.get(i).getReferences().length;
-            }
+            int currentEmailLength = theEmaiLList.get(i).getReferences().length;
             for( int v = 0; v < currentEmailLength; v++) {
                 String referenceCheck = theEmaiLList.get(i).getReferences()[v];
                 for( int z = 0; z < uniqueObjList.size(); z++){
@@ -216,7 +199,6 @@ public class EmailAnalysis {
                 sum += theEmailList.get(i).getReferences().length;
             }
         }
-        // Pass to user object
         averageEmailCount = sum / counter;
         return averageEmailCount;
     }
@@ -255,7 +237,7 @@ public class EmailAnalysis {
     private HashMap<String, ArrayList<Double>> wordFrequencyPercentange(HashMap<String, ArrayList<String>>  wordFrequency, ArrayList<Email> emailList) {
         ArrayList<Double> firstFlaggedWordFrequency = new ArrayList<Double>();
         ArrayList<Double> secondFlaggedWordFrequency = new ArrayList<Double>();
-
+    // TODO refactor this with creation of hashmap and arrays
         Double perHundred = (double) 100 / emailList.size();
         int likeFrequency = wordFrequency.get("like").size();
         double d = (double) likeFrequency;
